@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dil Tercihleri Araştırması | TEKNOFEST 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --digital-color: #6366f1;
+            --literary-color: #78350f;
+            --bg-light: #f8fafc;
+            --accent-color: #10b981;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-light);
+            margin: 0; padding: 0; color: #1e293b;
+        }
+
+        .page { display: none; min-height: 100vh; }
+        #main-page { display: block; }
+
+        .header { text-align: center; padding: 60px 20px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        .container { display: flex; justify-content: center; gap: 30px; padding: 40px 20px; flex-wrap: wrap; }
+        .card { background: white; border-radius: 20px; width: 320px; padding: 30px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+
+        #reader-page { background: #ffffff; padding: 40px 20px; }
+        .reader-content { max-width: 800px; margin: 0 auto; }
+
+        .story-text { font-size: 1.25rem; line-height: 1.8; margin: 30px 0; white-space: pre-line; }
+        .digital-font { font-family: 'Montserrat', sans-serif; color: #334155; }
+        .literary-font { font-family: 'Playfair Display', serif; color: #1a1a1a; }
+
+        .btn { display: block; padding: 15px 20px; border-radius: 10px; text-decoration: none; font-weight: bold; color: white; text-align: center; cursor: pointer; border: none; margin: 10px 0; font-size: 1rem; transition: 0.3s; }
+        .btn:hover { opacity: 0.9; transform: scale(1.02); }
+        
+        .btn-digital { background: var(--digital-color); }
+        .btn-literary { background: var(--literary-color); }
+        .btn-back { background: #94a3b8; margin-bottom: 20px; display: inline-block; width: auto; }
+
+        /* Anket Bölümü */
+        .anket-container { background: #f1f5f9; padding: 30px; border-radius: 20px; text-align: center; margin-top: 50px; border: 2px solid #e2e8f0; }
+        .anket-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        
+        @media (min-width: 600px) {
+            .anket-grid { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        .anket-btn { background: var(--accent-color); font-size: 0.9rem; padding: 12px 5px; }
+    </style>
+</head>
+<body>
+
+    <div id="main-page" class="page">
+        <div class="header">
+            <h1>Dil Tercihleri Araştırması</h1>
+            <p>Lütfen bir metin türü seçin, dikkatlice okuyun ve ardından 3 kısa anketi doldurun.</p>
+        </div>
+
+        <div class="container">
+            <div class="card">
+                <span style="font-size: 3rem;">📱</span>
+                <h2 style="color: var(--digital-color)">Dijital Dil</h2>
+                <p>Hızlı ve modern bir anlatım deneyimi.</p>
+                <button onclick="oku('digital')" class="btn btn-digital" style="width: 100%;">Metni Oku</button>
+            </div>
+
+            <div class="card">
+                <span style="font-size: 3rem;">📜</span>
+                <h2 style="color: var(--literary-color)">Edebi Dil</h2>
+                <p>Sanatsal ve derin bir anlatım deneyimi.</p>
+                <button onclick="oku('literary')" class="btn btn-literary" style="width: 100%;">Metni Oku</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reader-page" class="page">
+        <div class="reader-content">
+            <button class="btn btn-back" onclick="anaSayfayaDon()">← Listeye Dön</button>
+            <h1 id="baslik" style="text-align: center;"></h1>
+            <div id="metin" class="story-text"></div>
+
+            <div class="anket-container">
+                <h3 id="anket-ust-baslik">Okuma Bitti! Lütfen 3 Anketi de Doldurunuz:</h3>
+                <div class="anket-grid">
+                    <a href="BURAYA_1_ANKET_LINKINI_YAPISTIR" target="_blank" class="btn anket-btn">1. Anlatım Tercihleri</a>
+                    
+                    <a href="BURAYA_2_ANKET_LINKINI_YAPISTIR" target="_blank" class="btn anket-btn">2. Okuma Alışkanlıkları</a>
+                    
+                    <a href="BURAYA_3_ANKET_LINKINI_YAPISTIR" target="_blank" class="btn anket-btn">3. Edebiyat Algısı</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const icerikler = {
+            digital: {
+                baslik: "Geri Sayım (Dijital Anlatım)",
+                font: "digital-font",
+                renk: "var(--digital-color)",
+                metin: `Metro her zamanki gibi aşırı kalabalıktı. Yanımdaki teyze poşetleriyle beni iyice sıkıştırmıştı ama sesimi çıkarmadım. Kulaklığımı takıp müziğin sesini sonuna kadar açtım. 
+
+                Bir bildirim: "Sadece 10 dakikan kaldı. Hazırlan." 
+
+                Şaka mı bu şimdi? Ekran karardı ve koca bir geri sayım başladı. 09:59... 09:58... Kalbim küt küt atmaya başladı. Metro aniden büyük bir gürültüyle sarsıldı. Işıklar bir anda söndü. Karanlıkta herkes korkuyla bağırmaya başladı. 😱`
+            },
+            literary: {
+                baslik: "Zamanın Soğuk Nefesi (Edebi Anlatım)",
+                font: "literary-font",
+                renk: "var(--literary-color)",
+                metin: `Şehrin yeraltı damarlarında homurdanarak ilerleyen bu metal yığınının içinde, vaktin nasıl geçtiğini anlamak imkansızdı. İnsanlar, yorgun omuzlarına yüklenmiş hayat gaileleriyle, donuk camlara yansıyan siluetlerini izliyordu. 
+
+                Tam o sırada, avucumun içindeki cihaz, karanlık bir kehaneti müjdelercesine titredi. Ekranda beliren yazı, kısa ama bir o kadar da ürperticiydi: "Yalnızca on dakikanız kaldı. Hazırlanın." 
+
+                Ansızın, yerin yedi kat dibinden gelen kulak tırmalayıcı bir çığlıkla sarsıldık. Trenin demir tekerlekleri raylara dişlerini geçirmiş gibi acıyla inledi. Işıklar, son nefesini veren bir mum gibi titreyerek söndü.`
+            }
+        };
+
+        function oku(tur) {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('reader-page').style.display = 'block';
+
+            const data = icerikler[tur];
+            document.getElementById('baslik').innerText = data.baslik;
+            document.getElementById('baslik').style.color = data.renk;
+            document.getElementById('metin').innerText = data.metin;
+            document.getElementById('metin').className = "story-text " + data.font;
+            
+            document.getElementById('anket-ust-baslik').style.color = data.renk;
+
+            window.scrollTo(0, 0);
+        }
+
+        function anaSayfayaDon() {
+            document.getElementById('reader-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
